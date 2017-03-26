@@ -18,7 +18,7 @@ import networkx as nx
 def interactions(G, title):
     G.edges()
     G_dic_frame = pd.DataFrame(G.edges(), columns = ['node 1', 'node 2']) #단순 interaction 쌍 without attribute
-    
+    G_dic_frame.index.name = 'index' #cytoscape import시 에러막기 위해 이름 필요
     #연결 정보 저장
     G_dic_frame.to_excel(title + '.xlsx') 
     
@@ -27,6 +27,7 @@ def interactions(G, title):
 def node_attr(G, title):
     #
     G_dic_frame_node = pd.DataFrame(G.nodes(), columns = ['node name'])
+    G_dic_frame_node.index.name = 'index' #cytoscape import시 에러막기 위해 이름 필요
     attrs_node = list(list(G.node.values())[0])
     for i in attrs_node:
         node_attr = list(nx.get_node_attributes(G,i).values())
